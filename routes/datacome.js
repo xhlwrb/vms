@@ -9,6 +9,7 @@ router.get('/', function(req, res) {
 	var tel = url.parse(req.url, true).query["deviceId"];
 	var longitude = url.parse(req.url, true).query["longitude"];
 	var latitude = url.parse(req.url, true).query["latitude"];
+	var fall = "1";
 	var time = new Date();
 	
 	if(isInArea(longitude,latitude) == true)
@@ -29,6 +30,7 @@ router.get('/', function(req, res) {
 							username:tel,
 							longitude:longitude,
 							latitude:latitude,
+							fall:fall,
 							lastPositionTime:time
 						});
 
@@ -46,7 +48,7 @@ router.get('/', function(req, res) {
 						{
 							recordSet.update(
 								{username:tel},
-								{$set: {longitude:longitude,latitude:latitude,lastPositionTime:time} },
+								{$set: {longitude:longitude,latitude:latitude,fall:fall,lastPositionTime:time} },
 								{multi:true},
 								function(err){
 									//console.log(err);

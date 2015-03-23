@@ -101,63 +101,7 @@
 	
 </head>
 <body class="metro" onclick="alertStop()">
-	<script type="text/javascript">
-	var mi = 0;
-	var alerting = false;
-	var t;
-	function Alert()
-	{
-		if(alerting == true)
-		{
-			if(mi == 0)
-			{
-				
-				document.getElementById("navbar").className = "navbar";
-				mi = 1;
-			}
-			else
-			{
-
-				document.getElementById("navbar").className = "navbarAlert";
-				mi = 0;
-			}
-			t = setTimeout("Alert()",300);
-			
-		}
-	}
-	function alertStart()
-	{
-		
-		if(alerting == false)
-		{
-			alerting = true;
-			document.getElementById("alertAudio").play();
-			document.getElementById("alertAudio").loop="loop";
-			t = setTimeout("Alert()",300);
-		}
-		
-	}
-	function alertStop()
-	{
-		
-		if(alerting == false)
-		{
-			alerting = true;
-			document.getElementById("alertAudio").play();
-			document.getElementById("alertAudio").loop="loop";
-			t = setTimeout("Alert()",300);
-		}
-		else
-		{
-			alerting = false;
-			clearTimeout(t);
-			document.getElementById("alertAudio").pause();
-			document.getElementById("alertAudio").loop="false";
-			document.getElementById("navbar").className = "navbar";
-		}
-		
-	}
-	</script>
+	
 	<% include nav %>
 	<audio src="/audios/alert.wav" id="alertAudio"></audio>
 	<div id="l-map"></div>
@@ -173,6 +117,7 @@
 
 </body>
 </html>
+
 <script type="text/javascript">
 
 	
@@ -276,3 +221,70 @@
 
 
 
+<script type="text/javascript">
+var mi = 0;
+var alerting = false;
+var t;
+function Alert()
+{
+	if(alerting == true)
+	{
+		if(mi == 0)
+		{
+			
+			document.getElementById("navbar").className = "navbar";
+			mi = 1;
+		}
+		else
+		{
+
+			document.getElementById("navbar").className = "navbarAlert";
+			mi = 0;
+		}
+		t = setTimeout("Alert()",300);
+		
+	}
+}
+function alertStart()
+{
+	
+	if(alerting == false)
+	{
+		alerting = true;
+		document.getElementById("navbar").className = "navbar";
+		document.getElementById("alertAudio").play();
+		document.getElementById("alertAudio").loop="loop";
+		t = setTimeout("Alert()",300);
+	}
+	
+}
+function alertStop()
+{
+	
+	if(alerting == true)
+	{
+		alerting = false;
+		clearTimeout(t);
+		document.getElementById("alertAudio").pause();
+		document.getElementById("alertAudio").loop="false";
+		document.getElementById("navbar").className = "navbar";
+	}
+	
+}
+
+if(typeof(EventSource)!=="undefined")
+{
+	var src = new EventSource("alert");
+	src.onmessage=function(event)
+	{
+		
+		var data = event.data;
+		if(data == "alert")
+		{
+			alertStart();
+		}
+		
+	};
+}
+
+</script>

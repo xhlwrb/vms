@@ -6,6 +6,7 @@ var userSchema = new Schema({
 	username:String,
 	longitude:String,
 	latitude:String,
+	fall:String,
 	lastPositionTime:Date
 	
 });

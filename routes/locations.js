@@ -6,11 +6,14 @@ router.get('/', function(req, res) {
 	recordSet.find({},function(err,data){
 		if(!err)
 		{
+			
 			// console.log(data);
 			var data2send = '';
-			
+			var alertNum = 0;
 			for(var i = 0;i<data.length;i++)
 			{
+				if(data[i]['fall'] == "1")
+					alertNum ++;
 				var tempTel = data[i]['username'];
 				var tempX = data[i]['longitude'];
 				var tempY = data[i]['latitude'];
@@ -46,7 +49,7 @@ router.get('/', function(req, res) {
 				if(i != data.length - 1)
 					data2send += ';';
 			}
-			
+			global.alertNum = alertNum;
 			res.setHeader('Content-Type', 'text/event-stream');
 		    res.send("data:"+data2send +"\r\n\r\n");
 		}

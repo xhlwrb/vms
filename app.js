@@ -12,7 +12,7 @@ var locations = require('./routes/locations');
 var datacome = require('./routes/datacome');
 var config = require('./routes/config');
 var configConfirm = require('./routes/configConfirm');
-
+var alert = require('./routes/alert');
 var app = express();
 
 // view engine setup
@@ -32,13 +32,14 @@ app.use('/locations', locations);
 app.use('/datacome',datacome);
 app.use('/config',config);
 app.use('/configConfirm',configConfirm);
+app.use('/alert',alert);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-
+global.alertNum = 0;
 // error handlers
 
 // development error handler
