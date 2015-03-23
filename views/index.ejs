@@ -100,29 +100,66 @@
 	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
 	
 </head>
-<body class="metro" onload="Alert()">
+<body class="metro" onclick="alertStop()">
 	<script type="text/javascript">
 	var mi = 0;
-
+	var alerting = false;
+	var t;
 	function Alert()
 	{
-		if(mi == 0)
+		if(alerting == true)
 		{
+			if(mi == 0)
+			{
+				
+				document.getElementById("navbar").className = "navbar";
+				mi = 1;
+			}
+			else
+			{
+
+				document.getElementById("navbar").className = "navbarAlert";
+				mi = 0;
+			}
+			t = setTimeout("Alert()",300);
 			
-			document.getElementById("navbar").className = "navbar";
-			mi = 1;
+		}
+	}
+	function alertStart()
+	{
+		
+		if(alerting == false)
+		{
+			alerting = true;
+			document.getElementById("alertAudio").play();
+			document.getElementById("alertAudio").loop="loop";
+			t = setTimeout("Alert()",300);
+		}
+		
+	}
+	function alertStop()
+	{
+		
+		if(alerting == false)
+		{
+			alerting = true;
+			document.getElementById("alertAudio").play();
+			document.getElementById("alertAudio").loop="loop";
+			t = setTimeout("Alert()",300);
 		}
 		else
 		{
-
-			document.getElementById("navbar").className = "navbarAlert";
-			mi = 0;
+			alerting = false;
+			clearTimeout(t);
+			document.getElementById("alertAudio").pause();
+			document.getElementById("alertAudio").loop="false";
+			document.getElementById("navbar").className = "navbar";
 		}
-		setTimeout("Alert()",500);
+		
 	}
-	
 	</script>
 	<% include nav %>
+	<audio src="/audios/alert.wav" id="alertAudio"></audio>
 	<div id="l-map"></div>
 	<!-- <div id="result">
 		<button id="open">打开</button><button id="close">关闭</button>
