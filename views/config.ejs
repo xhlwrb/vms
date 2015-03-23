@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script type="text/javascript">
+		var inputNum = 4;
+		function moreInput()
+		{
+			var moreInput = document.getElementById("moreInput");
+			var oldHTML = document.getElementById("moreInput").innerHTML;
+			
+			
+			var num = inputNum < 10?'0'+String(inputNum):String(inputNum);
+			var tempHTML = '<div class="inputBlock"><div class="lable">坐标 ';
+			tempHTML += num;
+			tempHTML += '：</div><div class="inputX"><input type="text" class="location"  required="required" name="location';
+			tempHTML += num;
+			tempHTML += 'X"';
+			tempHTML += '></div><div class="inputY"><input type="text" class="location"  required="required" name="location';
+			tempHTML += num;
+			tempHTML += 'Y"';
+			tempHTML += ' ></div></div>';
+			inputNum ++;
+			document.getElementById("moreInput").innerHTML += tempHTML;
+			
+		}
+	</script>
+</head>
+<body class="config">
+<div class="global">
+	
+	<div class="formAera">
+
+		<form method="post" action="configConfirm">
+			<div class="formTitle">输入电子围栏顶点坐标</div>
+			<div class="inputBlock">
+				<div class="lable">坐标 01：</div><div class="inputX"><input type="text" class="location" type="number" required="required" name="location01X"></div><div class="inputY"><input type="text" class="location"  required="required" name="location01Y"></div>
+			</div>
+			<div class="inputBlock">
+				<div class="lable">坐标 02：</div><div class="inputX"><input type="text" class="location" type="number" required="required" name="location02X"></div><div class="inputY"><input type="text" class="location"  required="required" name="location02Y"></div>
+			</div>
+			<div class="inputBlock">
+				<div class="lable">坐标 03：</div><div class="inputX"><input type="text" class="location" type="number" required="required" name="location03X"></div><div class="inputY"><input type="text" class="location"  required="required" name="location03Y"></div>
+			</div>
+			<div class="input_more" id="moreInput">
+				
+			</div>
+			<div class="moreInput" onclick="moreInput()" title="点击添加更多" ><span class="bootFont">+</span></div>
+			<div class="submit"><input type="submit" class="submit" value="确定"></div>
+		</form>
+	</div>
+	<div class="configRight">
+		rejhsiogjtdfjp
+	</div>
+</div>
+</body>
+</html>

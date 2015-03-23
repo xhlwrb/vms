@@ -1,0 +1,165 @@
+@font-face {
+	font-family: bootStrapFont;
+	src: url('fonts/glyphicons-halflings-regular.ttf'),
+	 url('fonts/glyphicons-halflings-regular.eot'); /* IE9+ */
+}
+
+
+
+body.config {
+  
+	font: 20px  Verdana, 'Microsoft YaHei',sans-serif;
+	margin: 0px auto 0px auto;
+	min-width: 1000px;
+	width: 1100px;
+	
+
+}
+
+span.bootFont{
+	font-family:bootStrapFont;
+}
+
+a.navbar{
+	color:#aeaeae;
+	text-decoration:none;
+	}
+
+a.navbar:hover
+{
+	color:white;
+}
+
+
+div.navbar{
+	position: fixed;
+	font-size:20px;
+	min-width: 900px;
+	background-color: #222;
+
+	width: 100%;
+	height: 50px;
+	top: 0px;
+	left: 0px;
+	min-width: 1000px;
+	Z-index:5;
+	top: 0px;
+	left: 0px;
+	
+}
+
+div.navbarAlert{
+	position: fixed;
+	font-size:20px;
+	min-width: 900px;
+	background-color: red;
+	
+	width: 100%;
+	height: 50px;
+	top: 0px;
+	left: 0px;
+	min-width: 1000px;
+	Z-index:5;
+	top: 0px;
+	left: 0px;
+	
+}
+
+div.times
+{
+	margin-top: 10px;
+	margin-left: 50px;
+	float: left;
+}
+
+div.config{
+	margin-top: 13px;
+	margin-right: 50px;
+	float: right;
+	color:white;
+}
+
+div.customer{
+	margin-top: 10px;
+	margin-left: 500px;
+	float: left;
+	color:white;
+}
+
+
+.download{
+			
+			position: fixed;
+			left: 35%;
+			top: 60px;
+			font-size: 20px;
+		}
+
+.customerSum{
+	
+	display: inline-block;
+	
+}
+div.formTitle{
+	font-size: 25px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+div.formAera{
+	
+	margin: 10px auto 0px auto;
+	width: 600px;
+	float: left;
+}
+div.inputBlock{
+
+}
+div.lable{
+	display: inline-block;
+}
+
+div.inputX{
+	display: inline-block;
+}
+div.inputY{
+	display: inline-block;
+	margin-left: 30px;
+}
+
+div.moreInput{
+	margin-left: 20px;
+	margin-top: 30px;
+	width: 20px;
+}
+div.moreInput:hover{
+	cursor: pointer;
+}
+
+input.location{
+	
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: solid;
+	width: 150px;
+	text-align: center;
+	font-size: 16px;
+	font-family: Verdana, 'Microsoft YaHei',sans-serif;
+}
+
+input.submit{
+	font-size: 16px;
+	font-family: Verdana, 'Microsoft YaHei',sans-serif;
+	width: 100px;
+}
+
+div.submit{
+	
+	margin: 30px auto auto 160px;
+
+}
+div.configRight{
+	width: 400px;
+	float: right;
+	margin-top: 20px;
+}

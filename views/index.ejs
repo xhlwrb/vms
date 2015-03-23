@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
+        <link href="css/metro-bootstrap.css" rel="stylesheet">
+    <!-- Load JavaScript Libraries -->
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/jquery/jquery.widget.min.js"></script>
+
+    <!-- Metro UI CSS JavaScript plugins -->
+    <script src="js/load-metro.js"></script>
+    
+	<style type="text/css">
+		body, html{
+			width: 100%;
+			height: 100%;
+			
+			font-family:"微软雅黑";
+			font-size:14px;
+			
+		}
+		a{
+			background: transparent;
+			text-decoration:none;
+			/*color:#7f7f7f;*/
+			color: red;
+			
+		}
+		a:hover{
+			text-decoration: underline;}
+		#l-map {
+			margin-top: 28px;
+			width:100%; 
+			height:100%;
+			
+		}
+		
+		li{
+			line-height:28px;
+		}
+		.cityList{
+			height: 320px;
+			width:372px;
+			overflow-y:auto;
+		}
+		.sel_container{
+			z-index:9999;
+			font-size:12px;
+			position:absolute;
+			right:0px;
+			top:0px;
+			width:140px;
+			background:rgba(255,255,255,0.8);
+			height:30px;
+			line-height:30px;
+			padding:5px;
+		}
+		.map_popup {
+			position: absolute;
+			z-index: 200000;
+			width: 382px;
+			height: 344px;
+			right:0px;
+			top:40px;
+		}
+		.map_popup .popup_main { 
+			background:#fff;
+			border: 1px solid #8BA4D8;
+			height: 100%;
+			overflow: hidden;
+			position: absolute;
+			width: 100%;
+			z-index: 2;
+		}
+		.map_popup .title {
+			background: url("http://map.baidu.com/img/popup_title.gif") repeat scroll 0 0 transparent;
+			color: #6688CC;
+			font-weight: bold;
+			height: 24px;
+			line-height: 25px;
+			padding-left: 7px;
+		}
+		.map_popup button {
+			background: url("http://map.baidu.com/img/popup_close.gif") no-repeat scroll 0 0 transparent;
+			cursor: pointer;
+			height: 12px;
+			position: absolute;
+			right: 4px;
+			top: 6px;
+			width: 12px;
+		}
+		
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A4749739227af1618f7b0d1b588c0e85"></script>
+	<!-- 加载百度地图样式信息窗口 -->
+	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+	
+</head>
+<body class="metro" onload="Alert()">
+	<script type="text/javascript">
+	var mi = 0;
+
+	function Alert()
+	{
+		if(mi == 0)
+		{
+			
+			document.getElementById("navbar").className = "navbar";
+			mi = 1;
+		}
+		else
+		{
+
+			document.getElementById("navbar").className = "navbarAlert";
+			mi = 0;
+		}
+		setTimeout("Alert()",500);
+	}
+	
+	</script>
+	<% include nav %>
+	<div id="l-map"></div>
+	<!-- <div id="result">
+		<button id="open">打开</button><button id="close">关闭</button>
+	</div> -->
+	<!--城市列表-->
+	<!-- <div class="sel_container"><strong id="curCity">北京市</strong> [<a id="curCityText" href="javascript:void(0)">更换城市</a>]</div> -->
+	<div class="download"><a href="/androidApp/MyService.apk">点击这里下载 android App (app 里面输入 101.68.109.159)</a><div id="result"></div></div>
+	
+	 
+	
+
+</body>
+</html>
+<script type="text/javascript">
+
+	
+
+
+	// 百度地图API功能
+	var map = new BMap.Map("l-map");          // 创建地图实例
+	//var point = new BMap.Point(120.073694,30.269552);  // 创建点坐标
+	//map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别
+	var point = new BMap.Point(120.386383,30.319781);  // 创建点坐标
+	map.centerAndZoom(point, 18);                 // 初始化地图，设置中心点坐标和地图级别
+	map.enableScrollWheelZoom();
+	map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+	map.clearOverlays(); 
+
+	function alertLevel2color(level)
+	{
+		var colors = "";
+		switch(level)
+		{
+			case 0: colors = "red"; break;
+			case 1: colors = "green"; break;
+			case 2: colors = "red"; break;
+			case 3: colors = "blue";break;
+			case 4: colors = "black";break;
+			default : colors = "green";
+		}
+		return colors;
+	}
+
+	function addMarker(points,options){
+		// var marker = new BMap.Marker(point);
+		// map.addOverlay(marker);
+
+		var pointCollection = new BMap.PointCollection(points, options);  // 初始化PointCollection
+		map.addOverlay(pointCollection);  // 添加Overlay
+	}
+
+	// 此部分从服务器获取坐标
+	var data = new Array();
+
+	if(typeof(EventSource)!=="undefined")
+	{
+		var source=new EventSource("locations");
+		source.onmessage=function(event)
+		{
+			var result = document.getElementById("result");
+			var str = event.data;
+			var myData  = str.split(";");// 在每个逗号(,)处进行分解。
+			
+			if(str == "")
+			{
+				map.clearOverlays();
+				document.getElementById("customerSum").innerHTML = 0;
+
+			}
+			else
+			{
+				document.getElementById("customerSum").innerHTML = myData.length;
+
+				for(var i = 0;i<myData.length;i++)
+				{
+					data[i] = myData[i].split(",");
+				}
+				
+				
+				// for(var i = 0;i<data.length;i++)
+				// {
+					
+				// 	result.innerHTML+=str;
+					
+				// 	result.innerHTML+="<br />";
+				// }
+
+
+				// 根据从服务器获取的坐标绘制点
+		    	map.clearOverlays();
+			    for (var i = 0; i < data.length ; i++)
+			    {
+			    	var colors = alertLevel2color(i);
+			    	
+				    var points = [];  // 添加海量点数据
+					points.push(new BMap.Point(data[i][1], data[i][2]));
+					var options = {
+				        size: BMAP_POINT_SIZE_SMALL,
+				        shape: BMAP_POINT_SHAPE_CIRCLE,
+				        color: colors
+					}	
+					addMarker(points,options);
+			    }
+			}
+			
+		};
+	}
+	else
+	{
+		alert("浏览器不支持，换个浏览器吧...");
+	}
+
+</script>
+
+
+
