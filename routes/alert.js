@@ -4,18 +4,22 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res) {
 
-	if(global.alertNum >= 1)
+	var data2send = {};
+	var alert = "no";
+	var longitude = "";
+	var latitude = "";
+		
+
+	if(global.alertNum > 100)
 	{
-		var data2send = "alert";
-		res.setHeader('Content-Type', 'text/event-stream');
-		res.send("data:"+data2send +"\r\n\r\n");
+		var alert = "alert";
+		var longitude = "120.073694";
+		var latitude = "30.269552";
 	}
-	else
-	{
-		var data2send = "no";
-		res.setHeader('Content-Type', 'text/event-stream');
-		res.send("data:"+data2send +"\r\n\r\n");
-	}
+	
+	var data2send = JSON.stringify({alert:alert,longitude:longitude,latitude:latitude});
+	res.setHeader('Content-Type', 'text/event-stream');
+	res.send("data:"+data2send +"\r\n\r\n");
 });
 
 module.exports = router;

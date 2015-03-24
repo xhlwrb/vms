@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
 		if(!err)
 		{
 			
-			// console.log(data);
+			
 			var data2send = '';
 			var alertNum = 0;
 			for(var i = 0;i<data.length;i++)
@@ -35,12 +35,12 @@ router.get('/', function(req, res) {
 					    }
 					    else
 					    {
-					        //console.log(time);
+					        
 					    }
-						//console.log("remove "+tempTel+"! OK");
+						
 					});
 				}
-				//console.log(Math.floor(Math.random()*1000)/100000);
+				
 				data2send += String(tempTel);
 				data2send += ',';
 				data2send += String(tempX);
@@ -48,10 +48,38 @@ router.get('/', function(req, res) {
 				data2send += String(tempY);
 				if(i != data.length - 1)
 					data2send += ';';
+				// 正式使用时删掉 else
+				else
+				{
+					data2send += ';';
+				}
 			}
+
+			// 为测试而加
+			var max = 100;
+			for(var i = 0;i<max;i++)
+			{
+				
+				alertNum ++;
+				var tempTel = 'username';
+				var tempX = Math.floor(Math.random() * 1000000)/1000000 + 120;
+				var tempY = Math.floor(Math.random() * 1000000)/1000000 + 30;
+				
+				data2send += String(tempTel);
+				data2send += ',';
+				data2send += String(tempX);
+				data2send += ',';
+				data2send += String(tempY);
+				if(i != max-1)
+					data2send += ';';
+			}
+
+
+
 			global.alertNum = alertNum;
 			res.setHeader('Content-Type', 'text/event-stream');
 		    res.send("data:"+data2send +"\r\n\r\n");
+
 		}
 	});
 

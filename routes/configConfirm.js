@@ -6,7 +6,7 @@ router.post('/', function(req, res) {
 
 	
 	setBorder(req.body);
-	res.send(req['body']);
+	res.send("OK");
 });
 
 
@@ -14,7 +14,7 @@ function setBorder(data)
 {
 	var border = [];
 	var areaPoints = [[0,0],[10,0],[14,4],[14,8],[0,8]];
-	var str = "";
+
 	var str1 = "location";
 	var strX = "location01X";
 	var strY = "location01Y";

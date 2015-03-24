@@ -20,7 +20,7 @@
 		<form method="post" action="configConfirm">
 			<div class="formTitle">单击地图电子围栏顶点坐标将出现在此</div>
 			<div class="input_more" id="moreInput"></div>
-            <div class="remove" onclick="removeLocation()"><span class="bootFont" >−</span></div>
+            <div class="remove" onclick="removeLocation()" title="删除最后一组坐标"><span class="bootFont" >−</span></div>
 			<div class="submit"><input type="submit" class="submit" value="确定"></div>
 		</form>
 	</div>
@@ -120,18 +120,18 @@
     function showInfo(e){
         map.removeOverlay(label);
         var opts = {
-      position : e.point,    // 指定文本标注所在的地理位置
-      offset   : new BMap.Size(30, -30)    //设置文本偏移量
-    }
+            position : e.point,    // 指定文本标注所在的地理位置
+            offset   : new BMap.Size(30, -30)    //设置文本偏移量
+        }
         label = new BMap.Label(e.point.lng + ", " + e.point.lat, opts);  // 创建文本标注对象
         label.setStyle({
-             color : "red",
-             fontSize : "12px",
-             height : "20px",
-             lineHeight : "20px",
-             fontFamily:"微软雅黑"
-         });
-    map.addOverlay(label); 
+            color : "red",
+            fontSize : "12px",
+            height : "20px",
+            lineHeight : "20px",
+            fontFamily:"微软雅黑"
+        });
+        map.addOverlay(label); 
     }
     map.addEventListener("mousemove", showInfo);
 

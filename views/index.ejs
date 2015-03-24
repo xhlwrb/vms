@@ -32,7 +32,7 @@
 		a:hover{
 			text-decoration: underline;}
 		#l-map {
-			margin-top: 28px;
+			margin-top: 30px;
 			width:100%; 
 			height:100%;
 			
@@ -94,10 +94,12 @@
 		}
 		
 	</style>
+	
+
+
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A4749739227af1618f7b0d1b588c0e85"></script>
-	<!-- 加载百度地图样式信息窗口 -->
-	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
-	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 	
 </head>
 <body class="metro" onclick="alertStop()">
@@ -120,41 +122,22 @@
 
 <script type="text/javascript">
 
-	
-
-
 	// 百度地图API功能
 	var map = new BMap.Map("l-map");          // 创建地图实例
 	//var point = new BMap.Point(120.073694,30.269552);  // 创建点坐标
 	//map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别
 	var point = new BMap.Point(120.386383,30.319781);  // 创建点坐标
-	map.centerAndZoom(point, 18);                 // 初始化地图，设置中心点坐标和地图级别
+	map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别
 	map.enableScrollWheelZoom();
 	map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+
+	var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例
+	map.addControl(top_left_control);        
+  
+
 	map.clearOverlays(); 
 
-	function alertLevel2color(level)
-	{
-		var colors = "";
-		switch(level)
-		{
-			case 0: colors = "red"; break;
-			case 1: colors = "green"; break;
-			case 2: colors = "red"; break;
-			case 3: colors = "blue";break;
-			case 4: colors = "black";break;
-			default : colors = "green";
-		}
-		return colors;
-	}
-
-	function addMarker(points,options){
-		// var marker = new BMap.Marker(point);
-		// map.addOverlay(marker);
-
-		var pointCollection = new BMap.PointCollection(points, options);  // 初始化PointCollection
-		map.addOverlay(pointCollection);  // 添加Overlay
-	}
+	
 
 	// 此部分从服务器获取坐标
 	var data = new Array();
@@ -164,7 +147,7 @@
 		var source=new EventSource("locations");
 		source.onmessage=function(event)
 		{
-			var result = document.getElementById("result");
+			
 			var str = event.data;
 			var myData  = str.split(";");// 在每个逗号(,)处进行分解。
 			
@@ -182,34 +165,34 @@
 				{
 					data[i] = myData[i].split(",");
 				}
-				
-				
+
+				// var result = document.getElementById("result");
 				// for(var i = 0;i<data.length;i++)
 				// {
 					
-				// 	result.innerHTML+=str;
-					
+				// 	result.innerHTML+=data[i][1];
+				// 	result.innerHTML+="   ";
+				// 	result.innerHTML+=data[i][2];
 				// 	result.innerHTML+="<br />";
 				// }
 
 
 				// 根据从服务器获取的坐标绘制点
-		    	map.clearOverlays();
+		    	
+		    	var markers = [];
 			    for (var i = 0; i < data.length ; i++)
 			    {
-			    	var colors = alertLevel2color(i);
 			    	
-				    var points = [];  // 添加海量点数据
-					points.push(new BMap.Point(data[i][1], data[i][2]));
-					var options = {
-				        size: BMAP_POINT_SIZE_SMALL,
-				        shape: BMAP_POINT_SHAPE_CIRCLE,
-				        color: colors
-					}	
-					addMarker(points,options);
+			    	var pt = null;
+				    pt = new BMap.Point(Number(data[i][1]), Number(data[i][2]));
+	   				markers.push(new BMap.Marker(pt));
+					
 			    }
+			    map.clearOverlays();
+				//最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+				var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+
 			}
-			
 		};
 	}
 	else
@@ -254,7 +237,8 @@ function alertStart()
 		document.getElementById("navbar").className = "navbar";
 		document.getElementById("alertAudio").play();
 		document.getElementById("alertAudio").loop="loop";
-		t = setTimeout("Alert()",300);
+		Alert();
+		
 	}
 	
 }
@@ -279,8 +263,22 @@ if(typeof(EventSource)!=="undefined")
 	{
 		
 		var data = event.data;
-		if(data == "alert")
+
+		var alert = JSON.parse(data)['alert'];
+		var longitude = JSON.parse(data)['longitude'];
+		var latitude = JSON.parse(data)['latitude'];
+
+		// var result = document.getElementById("result");
+			
+		// result.innerHTML+= alert;
+		// result.innerHTML+= longitude;
+		// result.innerHTML+= latitude;
+		// result.innerHTML+="<br />";
+
+		if(alert == "alert")
 		{
+			var point = new BMap.Point(Number(longitude),Number(latitude));  // 创建点坐标
+			map.centerAndZoom(point, 18);                 // 初始化地图，设置中心点坐标和地图级别
 			alertStart();
 		}
 		
