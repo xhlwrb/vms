@@ -3,15 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-
-	var fs = require('fs');
-	
-	fs.readFile(__dirname+"border.json",function (err,data)
-	{
-		var border = JSON.parse(data);
-		// console.log(border);
-		res.render("config",{title:"设置"});
-	});
+	res.render("config",{title:"设置"});
 	
 });
 

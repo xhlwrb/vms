@@ -20,22 +20,85 @@
 		<form method="post" action="configConfirm">
 			<div class="formTitle">单击地图电子围栏顶点坐标将出现在此</div>
 			<div class="input_more" id="moreInput"></div>
+            <div class="remove" onclick="removeLocation()"><span class="bootFont" >−</span></div>
 			<div class="submit"><input type="submit" class="submit" value="确定"></div>
 		</form>
 	</div>
 	<div class="configRight">
-		<div id="allmap" style="width: 600px;height: 500px;"></div> 
-    <div> 
-       <label>经度</label> 
-       <span id="jing_du"></span> 
-       <label>纬度</label> 
-       <span id="wei_du"></span> 
-    </div> 
+		<div id="allmap" style="width: 650px;height: 600px;"></div> 
+    
 	</div>
 </div>
-</body> 
-<script type="text/javascript"> 
+</body>
+<script type="text/javascript">
 
+    function coverOldInput(num,longitude,latitude)
+    {
+        var strX = "";
+        var strY = "";
+        var strNum = num < 9?'0'+String(num+1):String(num+1);
+        var tempHTML = '<div class="inputBlock"><div class="lable">坐标 ';
+        tempHTML += strNum;
+        tempHTML += '：</div><div class="inputX"><input type="text" class="location"  required="required" onblur="textChanged()" name="';
+        strX = 'location';
+        strX += strNum;
+        strX += 'X';
+        tempHTML += strX;
+        tempHTML += '" id="';
+        tempHTML += strX;
+        tempHTML += '" value="';
+        tempHTML += String(longitude);
+        tempHTML += '""></div><div class="inputY"><input type="text" class="location"  required="required" onblur="textChanged()" name="';
+        strY = 'location';
+        strY += strNum;
+        strY += 'Y';
+        tempHTML += strY;
+        tempHTML += '" id="';
+        tempHTML += strY;
+
+        tempHTML += '" value="';
+        tempHTML += String(latitude);
+        tempHTML += '"></div></div>';
+        document.getElementById("moreInput").innerHTML += tempHTML;
+    }
+    function removeLocation()
+    {
+        locations.length -- ;
+        document.getElementById("moreInput").innerHTML = "";
+        for(var i=0;i< locations.length;i++)
+        {
+            coverOldInput(i,locations[i]['longitude'],locations[i]['latitude']);
+        }
+    }
+    function textChanged()
+    {
+        var len = locations.length;
+        locations = [];
+        for(var i = 0;i<len ; i++)
+        {
+            var num = i;
+            var strNum = num < 10?'0'+String(num+1):String(num+1);
+            strX = 'location';
+            strX += strNum;
+            strX += 'X';
+            strY = 'location';
+            strY += strNum;
+            strY += 'Y';
+            locations.push({longitude:document.getElementById(strX).value,
+                latitude:document.getElementById(strY).value});
+        }
+    }
+</script>
+<script type="text/javascript"> 
+    var locations = [];
+
+    function addInput(longitude,latitude)
+    {
+        
+        coverOldInput(locations.length,longitude,latitude);
+        locations.push({longitude:longitude,
+            latitude:latitude});
+    }
     // 百度地图API功能 
     var map = new BMap.Map("allmap");             
     
@@ -49,17 +112,7 @@
 
         var wei_du_value =  e.point.lat; 
 
-        //alert(e.point.lng + "," + e.point.lat); 
-
-        var jing_du = document.getElementById("jing_du"); 
-
-        var wei_du = document.getElementById("wei_du"); 
-
-        jing_du.innerHTML= jing_du_value; 
-
-        wei_du.innerHTML= wei_du_value; 
-
-        moreInput(jing_du_value,wei_du_value);
+        addInput(jing_du_value,wei_du_value);
 
     }); 
 	map.enableScrollWheelZoom(true); 
@@ -85,32 +138,4 @@
 
 </script> 
 </html>
-
-	<script type="text/javascript">
-		var inputNum = 1;
-		function moreInput(longitude,latitude)
-		{
-
-		
-			var moreInput = document.getElementById("moreInput");
-			var oldHTML = document.getElementById("moreInput").innerHTML;
-			
-			
-			var num = inputNum < 10?'0'+String(inputNum):String(inputNum);
-			var tempHTML = '<div class="inputBlock"><div class="lable">坐标 ';
-			tempHTML += num;
-			tempHTML += '：</div><div class="inputX"><input type="text" class="location"  required="required" name="location';
-			tempHTML += num;
-			tempHTML += 'X" value="';
-			tempHTML += String(longitude);
-			tempHTML += '""></div><div class="inputY"><input type="text" class="location"  required="required" name="location';
-			tempHTML += num;
-			tempHTML += 'Y" value="';
-			tempHTML += String(latitude);
-			tempHTML += '"></div></div>';
-			inputNum ++;
-			document.getElementById("moreInput").innerHTML += tempHTML;
-			
-		}
-	</script>
 	

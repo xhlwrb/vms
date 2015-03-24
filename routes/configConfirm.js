@@ -4,7 +4,6 @@ var router = express.Router();
 /* GET users listing. */
 router.post('/', function(req, res) {
 
-	var fs = require('fs');
 	
 	setBorder(req.body);
 	res.send(req['body']);
@@ -38,13 +37,14 @@ function setBorder(data)
 		
 	}
 	console.log(border);
-	// var fs = require('fs');
-	// fs.writeFile(__dirname+"border.json",JSON.stringify(border),function(err){
-	// 	if(err)
-	// 	{
-	// 		console.log(err);
-	// 	}
-	// });
+	
+	var fs = require('fs');
+	fs.writeFile(__dirname+"/../public/clientConfig/border.json",JSON.stringify(border),function(err){
+		if(err)
+		{
+			console.log(err);
+		}
+	});
 }
 
 

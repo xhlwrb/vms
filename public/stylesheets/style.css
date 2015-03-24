@@ -102,13 +102,13 @@ div.customer{
 }
 div.formTitle{
 	font-size: 25px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	
+	margin-bottom: 10px;
 }
 div.formAera{
 	
-	margin: 20px auto 0px auto;
-	width: 500px;
+	margin: 0px auto 0px auto;
+	width: 450px;
 	float: left;
 }
 div.inputBlock{
@@ -143,14 +143,20 @@ input.submit{
 	font-family: Verdana, 'Microsoft YaHei',sans-serif;
 	width: 100px;
 }
+div.remove{
+	margin-top: 20px;
+}
 
+div.remove:hover{
+	cursor: pointer;
+}
 div.submit{
 	
 	margin: 30px auto auto 160px;
 
 }
 div.configRight{
-	width: 600px;
+	width: 650px;
 	float: right;
-	margin-top: 20px;
+	
 }
