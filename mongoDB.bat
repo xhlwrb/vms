@@ -1,1 +1,1 @@
-mongod  -dbpath "D:\web\vms\data"
+mongod  -dbpath "data"
