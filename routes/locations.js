@@ -53,10 +53,12 @@ router.get('/', function(req, res) {
 				{
 					data2send += ';';
 				}
+				global.longitude = tempX;
+				global.latitude = tempY;
 			}
 
 			// 为测试而加
-			var max = 100;
+			var max = 10;
 			for(var i = 0;i<max;i++)
 			{
 				

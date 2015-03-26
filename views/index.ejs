@@ -14,7 +14,7 @@
     <script src="js/load-metro.js"></script>
     
 	<style type="text/css">
-		body, html{
+		body{
 			width: 100%;
 			height: 100%;
 			
@@ -25,7 +25,6 @@
 		a{
 			background: transparent;
 			text-decoration:none;
-			/*color:#7f7f7f;*/
 			color: red;
 			
 		}
@@ -38,65 +37,7 @@
 			
 		}
 		
-		li{
-			line-height:28px;
-		}
-		.cityList{
-			height: 320px;
-			width:372px;
-			overflow-y:auto;
-		}
-		.sel_container{
-			z-index:9999;
-			font-size:12px;
-			position:absolute;
-			right:0px;
-			top:0px;
-			width:140px;
-			background:rgba(255,255,255,0.8);
-			height:30px;
-			line-height:30px;
-			padding:5px;
-		}
-		.map_popup {
-			position: absolute;
-			z-index: 200000;
-			width: 382px;
-			height: 344px;
-			right:0px;
-			top:40px;
-		}
-		.map_popup .popup_main { 
-			background:#fff;
-			border: 1px solid #8BA4D8;
-			height: 100%;
-			overflow: hidden;
-			position: absolute;
-			width: 100%;
-			z-index: 2;
-		}
-		.map_popup .title {
-			background: url("http://map.baidu.com/img/popup_title.gif") repeat scroll 0 0 transparent;
-			color: #6688CC;
-			font-weight: bold;
-			height: 24px;
-			line-height: 25px;
-			padding-left: 7px;
-		}
-		.map_popup button {
-			background: url("http://map.baidu.com/img/popup_close.gif") no-repeat scroll 0 0 transparent;
-			cursor: pointer;
-			height: 12px;
-			position: absolute;
-			right: 4px;
-			top: 6px;
-			width: 12px;
-		}
-		
 	</style>
-	
-
-
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A4749739227af1618f7b0d1b588c0e85"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
@@ -124,20 +65,29 @@
 
 	// 百度地图API功能
 	var map = new BMap.Map("l-map");          // 创建地图实例
-	//var point = new BMap.Point(120.073694,30.269552);  // 创建点坐标
-	//map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别
-	var point = new BMap.Point(120.386383,30.319781);  // 创建点坐标
-	map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别
+	var point = new BMap.Point(120.073694,30.269552);  // 创建点坐标
+	map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别
+	
 	map.enableScrollWheelZoom();
 	map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
 
 	var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例
 	map.addControl(top_left_control);        
-  
-
 	map.clearOverlays(); 
 
-	
+	// 位到浏览器所在地
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r){
+		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+			var mk = new BMap.Marker(r.point);
+			map.addOverlay(mk);
+			map.panTo(r.point);
+			
+		}
+		else {
+			alert('failed'+this.getStatus());
+		}        
+	},{enableHighAccuracy: true})
 
 	// 此部分从服务器获取坐标
 	var data = new Array();
@@ -176,9 +126,7 @@
 				// 	result.innerHTML+="<br />";
 				// }
 
-
 				// 根据从服务器获取的坐标绘制点
-		    	
 		    	var markers = [];
 			    for (var i = 0; i < data.length ; i++)
 			    {
@@ -278,9 +226,14 @@ if(typeof(EventSource)!=="undefined")
 		if(alert == "alert")
 		{
 			var point = new BMap.Point(Number(longitude),Number(latitude));  // 创建点坐标
-			map.centerAndZoom(point, 18);                 // 初始化地图，设置中心点坐标和地图级别
+			map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别
+			
 			alertStart();
 		}
+		// else
+		// {
+		// 	alertStop();
+		// }
 		
 	};
 }

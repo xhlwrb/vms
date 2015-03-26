@@ -40,6 +40,8 @@ app.use(function(req, res, next) {
     next(err);
 });
 global.alertNum = 0;
+global.longitude = 0;
+global.latitude = 0;
 // error handlers
 
 // development error handler

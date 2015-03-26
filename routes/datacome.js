@@ -66,7 +66,7 @@ router.get('/', function(req, res) {
 
 });
 
- console.log(isInArea(0.0001,3.1001));
+// console.log(isInArea(0.0001,3.1001));
 
 function distance(x1,y1,x2,y2)
 {
