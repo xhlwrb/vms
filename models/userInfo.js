@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var userSchema = new Schema({
-	username:String,
+	deviceId:String,
 	longitude:String,
 	latitude:String,
 	fall:String,

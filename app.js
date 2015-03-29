@@ -13,6 +13,7 @@ var datacome = require('./routes/datacome');
 var config = require('./routes/config');
 var configConfirm = require('./routes/configConfirm');
 var alert = require('./routes/alert');
+var fence = require('./routes/fence');
 var app = express();
 
 // view engine setup
@@ -33,6 +34,7 @@ app.use('/datacome',datacome);
 app.use('/config',config);
 app.use('/configConfirm',configConfirm);
 app.use('/alert',alert);
+app.use('/fence',fence);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

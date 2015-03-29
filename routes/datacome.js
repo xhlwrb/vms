@@ -6,7 +6,7 @@ var url = require('url');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	var tel = url.parse(req.url, true).query["deviceId"];
+	var deviceId = url.parse(req.url, true).query["deviceId"];
 	var longitude = url.parse(req.url, true).query["longitude"];
 	var latitude = url.parse(req.url, true).query["latitude"];
 	var fall = "1";
@@ -14,20 +14,20 @@ router.get('/', function(req, res) {
 	
 	if(isInArea(longitude,latitude) == true)
 	{
-		if(tel == null)
+		if(deviceId == null)
 		{
-			tel = String(Math.floor(Math.random() * 100000000000));
-			console.log("temp tel is :"+tel);
+			deviceId = String(Math.floor(Math.random() * 100000000000));
+			console.log("temp deviceId is :"+deviceId);
 		}
 		else
 		{
-			recordSet.find({username:tel},function(err,data){
+			recordSet.find({deviceId:deviceId},function(err,data){
 				if(!err)
 				{
 					if(data.length == 0)
 					{
 						var newData = new recordSet({
-							username:tel,
+							deviceId:deviceId,
 							longitude:longitude,
 							latitude:latitude,
 							fall:fall,
@@ -47,21 +47,24 @@ router.get('/', function(req, res) {
 						if(data[0]['longitude'] != longitude ||  data[0]['latitude']  != latitude)
 						{
 							recordSet.update(
-								{username:tel},
+								{deviceId:deviceId},
 								{$set: {longitude:longitude,latitude:latitude,fall:fall,lastPositionTime:time} },
 								{multi:true},
 								function(err){
 									//console.log(err);
 								});
-							console.log(tel + " moved ... ");
+							console.log(deviceId + " moved ... ");
 						}
 					}
 				}
 			});
 		}
 	}
-	res.writeHead(200, {"Content-Type": "text/html"});
-    res.end("OK");
+	var fs = require('fs');
+
+	fs.readFile(__dirname+"/../public/clientConfig/border.json",function(err,data){
+		res.send(data);
+	});
 	
 
 });

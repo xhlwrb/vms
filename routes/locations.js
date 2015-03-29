@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
 			{
 				if(data[i]['fall'] == "1")
 					alertNum ++;
-				var tempTel = data[i]['username'];
+				var tempDeviceId = data[i]['deviceId'];
 				var tempX = data[i]['longitude'];
 				var tempY = data[i]['latitude'];
 				var time = data[i]['lastPositionTime'];
@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
 
 				if(time < currentTime )
 				{
-					recordSet.remove({username:String(tempTel)},function(err){
+					recordSet.remove({deviceId:String(tempDeviceId)},function(err){
 						if(err)
 						{
 					        console.log(err);
@@ -41,7 +41,7 @@ router.get('/', function(req, res) {
 					});
 				}
 				
-				data2send += String(tempTel);
+				data2send += String(tempDeviceId);
 				data2send += ',';
 				data2send += String(tempX);
 				data2send += ',';
@@ -63,11 +63,11 @@ router.get('/', function(req, res) {
 			{
 				
 				alertNum ++;
-				var tempTel = 'username';
+				var tempDeviceId = 'username';
 				var tempX = Math.floor(Math.random() * 1000000)/1000000 + 120;
 				var tempY = Math.floor(Math.random() * 1000000)/1000000 + 30;
 				
-				data2send += String(tempTel);
+				data2send += String(tempDeviceId);
 				data2send += ',';
 				data2send += String(tempX);
 				data2send += ',';
