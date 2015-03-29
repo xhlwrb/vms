@@ -37,9 +37,10 @@ function setBorder(data)
 		
 	}
 	console.log(border);
-	
+	var data2Store = {"limit":border};
+
 	var fs = require('fs');
-	fs.writeFile(__dirname+"/../public/clientConfig/border.json",JSON.stringify(border),function(err){
+	fs.writeFile(__dirname+"/../public/clientConfig/border.json",JSON.stringify(data2Store),function(err){
 		if(err)
 		{
 			console.log(err);

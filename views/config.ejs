@@ -5,8 +5,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/site.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css"> 
-        #allmap {width: 100%;height: 100%;overflow: hidden;} 
+        #allmap {width: 100%;height: 100%;overflow: hidden;}
+        h2{
+            color: #563d7c;
+        } 
     </style> 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7216b16c8441679ef2948d2b9a5731cc"></script> 
 </head> 
@@ -14,21 +20,23 @@
 
     
     <div class="global">
-	
-	<div class="formAera">
+	   <div class="fence">
+        	<div class="formAera">
 
-		<form method="post" action="configConfirm">
-			<div class="formTitle">单击地图电子围栏顶点坐标将出现在此王柔仪</div>
-			<div class="input_more" id="moreInput"></div>
-            <div class="remove" onclick="removeLocation()" title="删除最后一组坐标"><span class="bootFont" >−</span></div>
-			<div class="submit"><input type="submit" class="submit" value="确定"></div>
-		</form>
-	</div>
-	<div class="configRight">
-		<div id="allmap" style="width: 650px;height: 600px;"></div> 
-    
-	</div>
+        		<form method="post" action="configConfirm">
+        			<div class="formTitle">单击地图电子围栏顶点坐标将出现在此</div>
+        			<div class="input_more" id="moreInput"></div>
+                    <div class="remove" onclick="removeLocation()" title="删除最后一组坐标"><span class="bootFont" >−</span></div>
+        			<div class="submit"><input type="submit" class="submit" value="确定"></div>
+        		</form>
+        	</div>
+        	<div class="configRight">
+        		<div id="allmap" style="width: 100%;height: 600px;"></div> 
+            
+        	</div>
+        </div>
 </div>
+<% include footer %>
 </body>
 <script type="text/javascript">
 

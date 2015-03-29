@@ -8,11 +8,10 @@
 
 body.config {
   
-	font: 20px  Verdana, 'Microsoft YaHei',sans-serif;
+	font:  Verdana, 'Microsoft YaHei',sans-serif;
 	margin: 0px auto 0px auto;
-	min-width: 1000px;
-	width: 1100px;
-	
+
+	text-align: center;
 
 }
 
@@ -105,17 +104,30 @@ div.formTitle{
 	
 	margin-bottom: 10px;
 }
+div.fence{
+	/*height: 500px;*/
+	display: inline-block;
+}
 div.formAera{
 	
-	margin: 0px auto 0px auto;
+	/*margin: 0px auto 0px auto;*/
 	width: 450px;
 	float: left;
+
+	display: inline-block;
+}
+
+div.configRight{
+	width: 650px;
+	/*float: right;*/
+	display: inline-block;
 }
 div.inputBlock{
 
 }
 div.lable{
 	display: inline-block;
+	font-size: 16px;
 }
 
 div.inputX{
@@ -155,9 +167,4 @@ div.submit{
 	
 	margin: 30px auto auto 160px;
 
-}
-div.configRight{
-	width: 650px;
-	float: right;
-	
 }
