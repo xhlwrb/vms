@@ -4,12 +4,17 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res) {
 
-	var clientIP = req['client']['_peername'];
+	var clientIP = req['client']['_peername']['address'];
+	console.log(clientIP);
 	if(clientIP != "127.0.0.1")
 	{
-		res.redirect('');
+		res.redirect('/staticPages/noRight.html');
 	}
-	res.render("config",{title:"设置"});
+	else
+	{
+		res.render("config",{title:"设置"});
+	}
+	
 	
 });
 
