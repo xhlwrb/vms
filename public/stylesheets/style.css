@@ -100,19 +100,13 @@ div.customer{
 	
 }
 div.formTitle{
-	  font-size: 28px;
-  margin-bottom: 20px;
-  font-weight: bolder;
-  background-color: rgba(245, 245, 245, 0.89);
-  color: rgb(81, 6, 4);
+	font-size: 25px;
+	
+	margin-bottom: 10px;
 }
 div.fence{
 	/*height: 500px;*/
 	display: inline-block;
-	display: inline-block;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: rgb(229, 229, 229) solid 1px;
 }
 div.formAera{
 	
@@ -125,22 +119,15 @@ div.formAera{
 
 div.configRight{
 	width: 650px;
-  /* float: right; */
-  display: inline-block;
-  margin-left: 5px;
-  padding-left: 10px;
-  border-left: rgb(229, 229, 229) solid 1px;
-	
+	/*float: right;*/
+	display: inline-block;
 }
 div.inputBlock{
-	  margin-bottom: 10px;
-  font-family: fantasy;
-  font-size: 18px;
-  background-color: whitesmoke;
+
 }
 div.lable{
 	display: inline-block;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 div.inputX{
@@ -153,69 +140,31 @@ div.inputY{
 
 input.location{
 	
-	  border-top: none;
-  border-left: none;
-  border-right: none;
-  /* border-bottom: solid; */
-  width: 150px;
-  text-align: center;
-  font-size: 16px;
-  font-family: Verdana, 'Microsoft YaHei',sans-serif;
-  background-color: rgba(100, 128, 120, 0.43);
-  border-radius: 8px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: solid;
+	width: 150px;
+	text-align: center;
+	font-size: 16px;
+	font-family: Verdana, 'Microsoft YaHei',sans-serif;
 }
 
 input.submit{
-	
-	font-size: 20px;
-  font-family: Verdana, 'Microsoft YaHei',sans-serif;
-  width: 100px;
-  height: 30px;
-  border-radius: 5px;
-  background-color: whitesmoke;
-  border: none;
-  color: rgb(81, 6, 4);
-    margin-left: 133px;
+	font-size: 16px;
+	font-family: Verdana, 'Microsoft YaHei',sans-serif;
+	width: 100px;
 }
-
-input.submit:hover{
-	
-	font-size: 20px;
-  font-family: Verdana, 'Microsoft YaHei',sans-serif;
-  width: 100px;
-  height: 30px;
-  border-radius: 5px;
-  background-color: rgba(81, 6, 4,0.4);
-  border: none;
-  color:whitesmoke ;
-}
-
 div.remove{
 	margin-top: 20px;
-	  margin-left: 315px;
 	
 }
 
 div.remove:hover{
 	cursor: pointer;
-	color:rgb(81, 6, 4);
 }
 div.submit{
 	
 	margin: 30px auto auto 160px;
 
 }
-
-div.myhead{
-	font-size: 40px;
-  height: 50px;
-  width: 500px;
-  margin-left: 125px;
-  margin-right: 125px;
-  text-shadow: rgb(119, 136, 131) 4px 0px 7px;
-  float: left;
-  font-family: microsoft yahei;
-  color: rgb(100, 128, 120);
-  margin-bottom: 10px;
-}
-
