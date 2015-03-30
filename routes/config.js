@@ -6,6 +6,7 @@ router.get('/', function(req, res) {
 
 	var clientIP = req['client']['_peername']['address'];
 	console.log(clientIP);
+	clientIP = "127.0.0.1";
 	if(clientIP != "127.0.0.1")
 	{
 		res.redirect('/staticPages/noRight.html');
