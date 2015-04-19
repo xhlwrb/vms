@@ -15,6 +15,7 @@
         } 
     </style> 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7216b16c8441679ef2948d2b9a5731cc"></script> 
+   
 </head> 
 <body class="config">
     <div class="myhead"><img src="../images/ballonpic.jpg"style="  width: 25px;" />
@@ -101,7 +102,8 @@
 </script>
 <script type="text/javascript"> 
     var locations = [];
-
+    
+    
     function addInput(longitude,latitude)
     {
         
@@ -124,6 +126,9 @@
 
         addInput(jing_du_value,wei_du_value);
 
+        
+        drawLine();
+
     }); 
 	map.enableScrollWheelZoom(true); 
 	var label=null; 
@@ -133,7 +138,7 @@
             position : e.point,    // 指定文本标注所在的地理位置
             offset   : new BMap.Size(30, -30)    //设置文本偏移量
         }
-        label = new BMap.Label(e.point.lng + ", " + e.point.lat, opts);  // 创建文本标注对象
+        label = new BMap.Label(e.point.lng + " , " + e.point.lat, opts);  // 创建文本标注对象
         label.setStyle({
             color : "red",
             fontSize : "12px",
@@ -141,11 +146,27 @@
             lineHeight : "20px",
             fontFamily:"微软雅黑"
         });
+
         map.addOverlay(label); 
+
     }
     map.addEventListener("mousemove", showInfo);
+    var curve = null;
+    function drawLine()
+    {
+        
+        var points = [];
+        for(var i = 0 ;i<locations.length;i++)
+        {
+            points.push(new BMap.Point(locations[i]['longitude'],locations[i]['latitude']));
+        }
+        points.push(new BMap.Point(locations[0]['longitude'],locations[0]['latitude']));
+        map.removeOverlay(curve);
+        curve = new BMap.Polyline(points, {strokeColor:"red", strokeWeight:4, strokeOpacity:0.7}); //创建弧线对象
+        map.addOverlay(curve); //添加到地图中
+    }
 
-
+   
 </script> 
 </html>
 	
