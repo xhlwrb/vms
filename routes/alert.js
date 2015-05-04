@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 	var latitude = "";
 		
 
-	if(global.alertNum > 10)
+	if(global.alertNum > 100)
 	{
 		var alert = "alert";
 		var longitude = global.longitude;

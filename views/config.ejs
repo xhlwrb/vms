@@ -80,6 +80,7 @@
         {
             coverOldInput(i,locations[i]['longitude'],locations[i]['latitude']);
         }
+        drawLine(null);
     }
     function textChanged()
     {
@@ -102,7 +103,7 @@
 </script>
 <script type="text/javascript"> 
     var locations = [];
-    
+    var rightClicked = false;
     
     function addInput(longitude,latitude)
     {
@@ -127,7 +128,7 @@
         addInput(jing_du_value,wei_du_value);
 
         
-        drawLine();
+        
 
     }); 
 	map.enableScrollWheelZoom(true); 
@@ -146,19 +147,30 @@
             lineHeight : "20px",
             fontFamily:"微软雅黑"
         });
-
+        drawLine(e.point);
         map.addOverlay(label); 
-
+        
     }
     map.addEventListener("mousemove", showInfo);
+    map.addEventListener("rightclick", rightClick);
+    function rightClick()
+    {
+        if(rightClicked == true) rightClicked = false;
+        else rightClicked = true;
+        drawLine(null);
+    }
     var curve = null;
-    function drawLine()
+    function drawLine(cursor)
     {
         
         var points = [];
         for(var i = 0 ;i<locations.length;i++)
         {
             points.push(new BMap.Point(locations[i]['longitude'],locations[i]['latitude']));
+        }
+        if(cursor != null && rightClicked == false)
+        {
+            points.push(new BMap.Point(cursor.lng,cursor.lat));
         }
         points.push(new BMap.Point(locations[0]['longitude'],locations[0]['latitude']));
         map.removeOverlay(curve);

@@ -58,14 +58,14 @@ router.get('/', function(req, res) {
 			}
 
 			// 为测试而加
-			var max = 10;
+			var max = 100;
 			for(var i = 0;i<max;i++)
 			{
 				
 				alertNum ++;
 				var tempDeviceId = 'username';
-				var tempX = Math.floor(Math.random() * 1000000)/1000000 + 120;
-				var tempY = Math.floor(Math.random() * 1000000)/1000000 + 30;
+				var tempX = Math.floor(Math.random() * 1000)/100000 + 120.07;
+				var tempY = Math.floor(Math.random() * 1000)/100000 + 30.268;
 				
 				data2send += String(tempDeviceId);
 				data2send += ',';

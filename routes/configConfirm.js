@@ -6,7 +6,7 @@ router.post('/', function(req, res) {
 
 	
 	setBorder(req.body);
-	res.send("OK");
+	res.redirect("/");
 });
 
 
