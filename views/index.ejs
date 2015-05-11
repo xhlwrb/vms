@@ -10,11 +10,11 @@
     <script type="text/javascript" src="javascripts/jquery.min.js"></script>
 	<script type="text/javascript" src="javascripts/fence.js"></script>
 	
-    <script src="js/jquery/jquery.min.js"></script>
+    
     <script src="js/jquery/jquery.widget.min.js"></script>
 
     <!-- Metro UI CSS JavaScript plugins -->
-    <script src="js/load-metro.js"></script>
+    
     
 	<style type="text/css">
 		body{
@@ -56,7 +56,7 @@
 	</div> -->
 	<!--城市列表-->
 	<!-- <div class="sel_container"><strong id="curCity">北京市</strong> [<a id="curCityText" href="javascript:void(0)">更换城市</a>]</div> -->
-	<div class="download"><a href="/androidApp/MyService.apk">点击这里下载 android App (app 里面输入 101.68.109.159)</a><div id="result"></div></div>
+	
 	
 	 
 	
@@ -106,78 +106,101 @@
 	map.clearOverlays(); 
 
 	// 位到浏览器所在地
-	var geolocation = new BMap.Geolocation();
-	geolocation.getCurrentPosition(function(r){
-		if(this.getStatus() == BMAP_STATUS_SUCCESS){
-			var mk = new BMap.Marker(r.point);
-			map.addOverlay(mk);
-			map.panTo(r.point);
+	// var geolocation = new BMap.Geolocation();
+	// geolocation.getCurrentPosition(function(r){
+	// 	if(this.getStatus() == BMAP_STATUS_SUCCESS){
+	// 		var mk = new BMap.Marker(r.point);
+	// 		map.addOverlay(mk);
+	// 		map.panTo(r.point);
 			
-		}
-		else {
-			alert('failed'+this.getStatus());
-		}        
-	},{enableHighAccuracy: true})
-
+	// 	}
+	// 	else {
+	// 		alert('failed'+this.getStatus());
+	// 	}        
+	// },{enableHighAccuracy: true})
+	
+	map.addEventListener("dragend", clearPoints);
+	map.addEventListener("zoomend", clearPoints);
+	function clearPoints(){
+		
+		map.clearOverlays();
+		drawLine();
+	}
 	// 此部分从服务器获取坐标
-	var data = new Array();
+	
+	setTimeout('request()',1000);
+	function request(){
+		$.ajax({
+			type:'get',
+			url:'locations',
+			data:'',
+			err:function(err){ alert(err);},
+			success:draw
+		});
+	};
+	
+	function draw(data,status){
 
-	if(typeof(EventSource)!=="undefined")
-	{
-		var source=new EventSource("locations");
-		source.onmessage=function(event)
+		var str = data;
+		var myData  = str.split(";");// 在每个逗号(,)处进行分解。
+		
+		if(str == "")
 		{
-			
-			var str = event.data;
-			var myData  = str.split(";");// 在每个逗号(,)处进行分解。
-			
-			if(str == "")
+			map.clearOverlays();
+			document.getElementById("customerSum").innerHTML = 0;
+
+		}
+		else
+		{
+			document.getElementById("customerSum").innerHTML = myData.length;
+
+			for(var i = 0;i<myData.length;i++)
 			{
-				map.clearOverlays();
-				document.getElementById("customerSum").innerHTML = 0;
-
+				myData[i] = myData[i].split(",");
 			}
-			else
-			{
-				document.getElementById("customerSum").innerHTML = myData.length;
 
-				for(var i = 0;i<myData.length;i++)
-				{
-					data[i] = myData[i].split(",");
-				}
+			// var result = document.getElementById("result");
+			// for(var i = 0;i<data.length;i++)
+			// {
+				
+			// 	result.innerHTML+=data[i][1];
+			// 	result.innerHTML+="   ";
+			// 	result.innerHTML+=data[i][2];
+			// 	result.innerHTML+="<br />";
+			// }
 
-				// var result = document.getElementById("result");
-				// for(var i = 0;i<data.length;i++)
-				// {
-					
-				// 	result.innerHTML+=data[i][1];
-				// 	result.innerHTML+="   ";
-				// 	result.innerHTML+=data[i][2];
-				// 	result.innerHTML+="<br />";
-				// }
+			// 根据从服务器获取的坐标绘制点
+	    	var markers = [];
+		    for (var i = 0; i < myData.length ; i++)
+		    {
+		    	
+		    	var pt = null;
+			    pt = new BMap.Point(Number(myData[i][1]), Number(myData[i][2]));
+   				markers.push(new BMap.Marker(pt));
+				
+		    }
+		    map.clearOverlays();
+		    drawLine();
+			//生成一个marker数组，然后调用markerClusterer类即可。
+			var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
 
-				// 根据从服务器获取的坐标绘制点
-		    	var markers = [];
-			    for (var i = 0; i < data.length ; i++)
-			    {
-			    	
-			    	var pt = null;
-				    pt = new BMap.Point(Number(data[i][1]), Number(data[i][2]));
-	   				markers.push(new BMap.Marker(pt));
-					
-			    }
-			    map.clearOverlays();
-			    drawLine();
-				//最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
-				var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
-
-			}
-		};
+		}
+		setTimeout('request()',3000);
 	}
-	else
-	{
-		alert("浏览器不支持，换个浏览器吧...");
-	}
+	// if(typeof(EventSource)!=="undefined")
+	// {
+	// 	var source=new EventSource("locations");
+	// 	source.onmessage=function(event)
+	// 	{
+			
+			
+	// 	};
+	// }
+	// else
+	// {
+	// 	alert("浏览器不支持，换个浏览器吧...");
+	// }
+	
 
 </script>
 

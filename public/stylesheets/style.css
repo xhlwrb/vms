@@ -80,19 +80,10 @@ div.config{
 
 div.customer{
 	margin-top: 10px;
-	margin-left: 500px;
+	margin-left: 10%;
 	float: left;
-	color:white;
+	color: white;
 }
-
-
-.download{
-			
-			position: fixed;
-			left: 35%;
-			top: 60px;
-			font-size: 20px;
-		}
 
 .customerSum{
 	

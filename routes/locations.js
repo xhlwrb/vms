@@ -58,7 +58,7 @@ router.get('/', function(req, res) {
 			}
 
 			// 为测试而加
-			var max = 100;
+			var max = 1000;
 			for(var i = 0;i<max;i++)
 			{
 				
@@ -79,8 +79,9 @@ router.get('/', function(req, res) {
 
 
 			global.alertNum = alertNum;
-			res.setHeader('Content-Type', 'text/event-stream');
-		    res.send("data:"+data2send +"\r\n\r\n");
+			res.send(data2send);
+			// res.setHeader('Content-Type', 'text/event-stream');
+		 //    res.send("data:"+data2send +"\r\n\r\n");
 
 		}
 	});
