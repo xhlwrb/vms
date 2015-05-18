@@ -58,7 +58,7 @@ router.get('/', function(req, res) {
 			}
 
 			// 为测试而加
-			var max = 1000;
+			var max = 500;
 			for(var i = 0;i<max;i++)
 			{
 				
