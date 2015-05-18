@@ -128,8 +128,8 @@
 	}
 	// 此部分从服务器获取坐标
 	
-	setTimeout('request()',1000);
-	function request(){
+	setTimeout('requestLocations()',1000);
+	function requestLocations(){
 		$.ajax({
 			type:'get',
 			url:'locations',
@@ -137,7 +137,8 @@
 			err:function(err){ alert(err);},
 			success:draw
 		});
-	};
+
+	}
 	
 	function draw(data,status){
 
@@ -185,31 +186,49 @@
 			var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
 
 		}
-		setTimeout('request()',3000);
+		setTimeout('requestLocations()',3000);
 	}
-	// if(typeof(EventSource)!=="undefined")
-	// {
-	// 	var source=new EventSource("locations");
-	// 	source.onmessage=function(event)
-	// 	{
-			
-			
-	// 	};
-	// }
-	// else
-	// {
-	// 	alert("浏览器不支持，换个浏览器吧...");
-	// }
 	
 
-</script>
 
+	var mi = 0;
+	var alerting = false;
+	var t;
+	setTimeout('requestAlert()',1000);
+	function alertReq(data,status)
+	{
+		data = JSON.parse(data);
+		
+		var al = data['alert'];
+		var longitude = data['longitude'];
+		var latitude = data['latitude'];
+		if(al == "alert")
+		{
+			var point = new BMap.Point(Number(longitude),Number(latitude));  // 创建点坐标
+			map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别
+			
+			alertStart();
+		}
+		// else
+		// {
+		// 	alertStop();
+		// }
+		setTimeout('requestAlert()',2000);
+	}
+	// 向服务器请求所有坐标数据
+	function requestAlert(){
+		
+		$.ajax({
+			type:'get',
+			url:'alert',
+			data:'',
+			err:function(err){ alert(err);},
+			success:alertReq
+		});
 
-
-<script type="text/javascript">
-var mi = 0;
-var alerting = false;
-var t;
+	}
+	
+	
 // 对警报是导航栏颜色的控制
 function Alert()
 {
@@ -260,44 +279,5 @@ function alertStop()
 	}
 	
 }
-
-if(typeof(EventSource)!=="undefined")
-{
-	// 向服务器请求所有坐标数据
-	var src = new EventSource("alert");
-	src.onmessage=function(event)
-	{
-		
-		var data = event.data;
-
-		var alert = JSON.parse(data)['alert'];
-		var longitude = JSON.parse(data)['longitude'];
-		var latitude = JSON.parse(data)['latitude'];
-
-		// var result = document.getElementById("result");
-			
-		// result.innerHTML+= alert;
-		// result.innerHTML+= longitude;
-		// result.innerHTML+= latitude;
-		// result.innerHTML+="<br />";
-
-		if(alert == "alert")
-		{
-			var point = new BMap.Point(Number(longitude),Number(latitude));  // 创建点坐标
-			map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别
-			
-			alertStart();
-		}
-		// else
-		// {
-		// 	alertStop();
-		// }
-		
-	};
-}
-
-
-
-
 
 </script>

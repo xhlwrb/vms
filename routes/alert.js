@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res) {
 
-	var data2send = {};
+	var data2send = '';
 	var alert = "no";
 	var longitude = "";
 	var latitude = "";
@@ -12,14 +12,15 @@ router.get('/', function(req, res) {
 
 	if(global.alertNum > 500)
 	{
-		var alert = "alert";
-		var longitude = global.longitude;
-		var latitude = global.latitude;
+		alert = "alert";
+		longitude = global.longitude;
+		latitude = global.latitude;
 	}
 	
 	var data2send = JSON.stringify({alert:alert,longitude:longitude,latitude:latitude});
-	res.setHeader('Content-Type', 'text/event-stream');
-	res.send("data:"+data2send +"\r\n\r\n");
+	res.send(data2send);
+	// res.setHeader('Content-Type', 'text/event-stream');
+	// res.send("data:"+data2send +"\r\n\r\n");
 });
 
 module.exports = router;
