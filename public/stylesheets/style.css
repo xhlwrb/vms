@@ -176,7 +176,11 @@ input.submit{
   background-color:rgba(245, 245, 245, 0.51);
   border: none;
   color: rgba(31, 80, 95, 0.87);
-    margin-left: 133px;
+  margin-left: 133px;
+  transition: all 1s;
+  -moz-transition: all 1s;  /* Firefox 4 */
+  -webkit-transition: all 1s; /* Safari 和 Chrome */
+  -o-transition: all 1s;  /* Opera */
 }
 
 input.submit:hover{
@@ -189,6 +193,7 @@ input.submit:hover{
   background-color: rgba(81, 6, 4,0.4);
   border: none;
   color:whitesmoke ;
+  
 }
 
 div.remove{
@@ -282,19 +287,24 @@ a{
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     transition: all 0.5s;
+    -o-transition: all 0.5s; /* Opera */
    }
 
 
 p:nth-child(1) a{
     color:rgba(111, 82, 28, 0.8);
     font-family:Verdana, 'Microsoft YaHei',sans-serif;
+      text-decoration: none;
+    -webkit-animation: neon1 1s ease-in-out infinite alternate;
+    -moz-animation: neon1 1s ease-in-out infinite alternate;
+    animation: neon1 1s ease-in-out infinite alternate;
 }
-p:nth-child(1) a:hover{
+/*p:nth-child(1) a:hover{
 	text-decoration: none;
     -webkit-animation: neon1 0.5s ease-in-out infinite alternate;
     -moz-animation: neon1 0.5s ease-in-out infinite alternate;
     animation: neon1 0.5s ease-in-out infinite alternate;
-}
+}*/
 
 
 
