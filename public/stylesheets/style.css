@@ -5,7 +5,7 @@
 }
 
 
-
+@-ms-viewport{width:device-width}
 body.config {
   
 	font:  Verdana, 'Microsoft YaHei',sans-serif;
