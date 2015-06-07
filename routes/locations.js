@@ -48,34 +48,10 @@ router.get('/', function(req, res) {
 				data2send += String(tempY);
 				if(i != data.length - 1)
 					data2send += ';';
-				// 正式使用时删掉 else
-				else
-				{
-					data2send += ';';
-				}
+				
 				global.longitude = tempX;
 				global.latitude = tempY;
 			}
-
-			// 为测试而加
-			var max = 500;
-			for(var i = 0;i<max;i++)
-			{
-				
-				alertNum ++;
-				var tempDeviceId = 'username';
-				var tempX = Math.floor(Math.random() * 1000)/100000 + 120.07;
-				var tempY = Math.floor(Math.random() * 1000)/100000 + 30.268;
-				
-				data2send += String(tempDeviceId);
-				data2send += ',';
-				data2send += String(tempX);
-				data2send += ',';
-				data2send += String(tempY);
-				if(i != max-1)
-					data2send += ';';
-			}
-
 
 
 			global.alertNum = alertNum;
