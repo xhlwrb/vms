@@ -63,7 +63,6 @@ router.get('/', function(req, res) {
 	// 作为和传来的坐标数据没有关联的，但是有为了方便，直接在这个页面将电子围栏的坐标数据发送过去
 	// 因此下面的代码也没有放到回掉函数里面，因为和前面的数据处理没有关联嘛
 	var fs = require('fs');
-
 	fs.readFile(__dirname+"/../public/clientConfig/border.json",function(err,data){
 		res.send(data);
 	});
